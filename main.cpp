@@ -21,6 +21,16 @@ using namespace metaengine;
 int main() {
     std::cout << "===== Physics & Math Computation Engine Demo =====\n\n";
 
+    constexpr int kInitialIntValue = 10;
+    constexpr int kSecondaryIntValue = 20;
+    constexpr double kPiApproximation = 3.14;
+    constexpr double kEulerApproximation = 2.71;
+    constexpr int kFormatterIntValue = 255;
+    constexpr double kFormatterPiValue = 3.14159;
+    constexpr double kScientificFormatterValue = 123.0;
+    constexpr int kOffsetValue = 5;
+    constexpr double kMixedTypeOperand = 4.5;
+
     // ---- Section 1: TypeInfo specializations ----
     std::cout << "--- TypeInfo Specializations ---\n";
 
@@ -58,30 +68,34 @@ int main() {
     // ---- Section 2: Swap specializations ----
     std::cout << "\n--- Swap Specializations ---\n";
 
-    int a = 10, b = 20;
-    mySwap(a, b);
-    std::cout << "After int swap: a=" << a << ", b=" << b << "\n";
+    int firstIntValue = kInitialIntValue;
+    int secondIntValue = kSecondaryIntValue;
+    mySwap(firstIntValue, secondIntValue);
+    std::cout << "After int swap: a=" << firstIntValue << ", b=" << secondIntValue << "\n";
     // Expected:
     // Int XOR swap
     // After int swap: a=20, b=10
 
-    std::string s1 = "hello", s2 = "world";
-    mySwap(s1, s2);
-    std::cout << "After string swap: s1=" << s1 << ", s2=" << s2 << "\n";
+    std::string firstStringValue = "hello";
+    std::string secondStringValue = "world";
+    mySwap(firstStringValue, secondStringValue);
+    std::cout << "After string swap: s1=" << firstStringValue << ", s2=" << secondStringValue << "\n";
     // Expected:
     // String optimized swap
     // After string swap: s1=world, s2=hello
 
-    bool b1 = true, b2 = false;
-    mySwap(b1, b2);
-    std::cout << "After bool swap: b1=" << b1 << ", b2=" << b2 << "\n";
+    bool firstBoolValue = true;
+    bool secondBoolValue = false;
+    mySwap(firstBoolValue, secondBoolValue);
+    std::cout << "After bool swap: b1=" << firstBoolValue << ", b2=" << secondBoolValue << "\n";
     // Expected:
     // Bool logical swap
     // After bool swap: b1=0, b2=1
 
-    double d1 = 3.14, d2 = 2.71;
-    mySwap(d1, d2);
-    std::cout << "After double swap: d1=" << d1 << ", d2=" << d2 << "\n";
+    double firstDoubleValue = kPiApproximation;
+    double secondDoubleValue = kEulerApproximation;
+    mySwap(firstDoubleValue, secondDoubleValue);
+    std::cout << "After double swap: d1=" << firstDoubleValue << ", d2=" << secondDoubleValue << "\n";
     // Expected:
     // Generic swap
     // After double swap: d1=2.71, d2=3.14
@@ -89,16 +103,16 @@ int main() {
     // ---- Section 3: Formatter specializations ----
     std::cout << "\n--- Formatter Specializations ---\n";
 
-    std::cout << Formatter<int>::format(255) << "\n";
+    std::cout << Formatter<int>::format(kFormatterIntValue) << "\n";
     // Expected: 255
 
-    std::cout << Formatter<int>::formatHex(255) << "\n";
+    std::cout << Formatter<int>::formatHex(kFormatterIntValue) << "\n";
     // Expected: 0xFF
 
-    std::cout << Formatter<double>::format(3.14159, 3) << "\n";
+    std::cout << Formatter<double>::format(kFormatterPiValue, 3) << "\n";
     // Expected: 3.142
 
-    std::cout << Formatter<double>::formatScientific(123.0, 3) << "\n";
+    std::cout << Formatter<double>::formatScientific(kScientificFormatterValue, 3) << "\n";
     // Expected: 1.230e+02
 
     std::cout << Formatter<bool>::format(true) << "\n";
@@ -133,11 +147,11 @@ int main() {
     // Expected: f(3) = 3
 
     // g(x) = x + 5
-    using G = Add<Var, Const<5>>;
-    std::cout << "g(x) = " << G::toString() << "\n";
+    using ExampleSumExpr = Add<Var, Const<kOffsetValue>>;
+    std::cout << "g(x) = " << ExampleSumExpr::toString() << "\n";
     // Expected: g(x) = (x + 5)
 
-    std::cout << "g(3) = " << G::eval(3) << "\n";
+    std::cout << "g(3) = " << ExampleSumExpr::eval(3) << "\n";
     // Expected: g(3) = 8
 
     // h(x) = x * x
@@ -175,12 +189,12 @@ int main() {
     // Expected: Marathon: 26.22 miles
 
     // Energy computations
-    constexpr double ke = kineticEnergy(10.0, 5.0);
-    std::cout << "KE(10kg, 5m/s) = " << ke << " J\n";
+    constexpr double kineticEnergyValue = kineticEnergy(10.0, 5.0);
+    std::cout << "KE(10kg, 5m/s) = " << kineticEnergyValue << " J\n";
     // Expected: KE(10kg, 5m/s) = 125.00 J
 
-    constexpr double pe = potentialEnergy(10.0, 20.0);
-    std::cout << "PE(10kg, 20m) = " << pe << " J\n";
+    constexpr double potentialEnergyValue = potentialEnergy(10.0, 20.0);
+    std::cout << "PE(10kg, 20m) = " << potentialEnergyValue << " J\n";
     // Expected: PE(10kg, 20m) = 1961.33 J
 
     constexpr double e_mc2 = massEnergy(1.0);
@@ -197,7 +211,7 @@ int main() {
     std::cout << "\n--- decltype Utilities ---\n";
     std::cout << std::defaultfloat;
 
-    auto result1 = add(3, 4.5);
+    auto result1 = add(3, kMixedTypeOperand);
     std::cout << "add(3, 4.5) = " << result1 << "\n";
     // Expected: add(3, 4.5) = 7.5
 
@@ -205,11 +219,11 @@ int main() {
     std::cout << "multiply(3, 4) = " << result2 << "\n";
     // Expected: multiply(3, 4) = 12
 
-    auto result3 = maxOf(3, 4.5);
+    auto result3 = maxOf(3, kMixedTypeOperand);
     std::cout << "maxOf(3, 4.5) = " << result3 << "\n";
     // Expected: maxOf(3, 4.5) = 4.5
 
-    auto result4 = minOf(3, 4.5);
+    auto result4 = minOf(3, kMixedTypeOperand);
     std::cout << "minOf(3, 4.5) = " << result4 << "\n";
     // Expected: minOf(3, 4.5) = 3
 
